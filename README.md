@@ -1,2 +1,2 @@
 # nextcloud-docker-development
-SensorLogger Docker development environment for owncloud
+SensorLogger Docker development environment for nextcloud
