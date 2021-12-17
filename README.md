@@ -16,7 +16,9 @@ Created and tested for use with Ubuntu 20.04. But should work on any system supp
 3. your@machine:...nextcloud-docker-development$ `composer install`
 4. your@machine:...nextcloud-docker-development$ `composer docker-up`
 5. your@machine:...nextcloud-docker-development$ `sudo chown -Rf [USER]:[GROUP] sensorlogger/` (adjust [USER] and [GROUP] to fit your needs)
-6. open browser goto http://localhost:8081/ and login (user and password `admin`)
+6. your@machine:...nextcloud-docker-development$ `cd sensorlogger`
+7. your@machine:...nextcloud-docker-development$ `git checkout 0.1-nc-devel`
+8. open browser goto http://localhost:8081/ and login (user and password `admin`)
 
 ### Usage
 
