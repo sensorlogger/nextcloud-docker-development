@@ -1,0 +1,69 @@
+{
+  "name":"sensorlogger/development-env-nc",
+  "description":"SensorLogger Development Environment for Nextcloud",
+  "version":"0.0.1",
+  "type":"project",
+  "license":"GNU GPLv3",
+  "repositories":[
+    {
+      "type":"vcs",
+      "url":"https://github.com/alexstocker/sensorlogger.git"
+    }
+  ],
+  "require":{
+    "php":">=7.2",
+    "alexstocker/sensorlogger":"dev-0.1-devel"
+  },
+  "require-dev":{
+
+  },
+  "minimum-stability":"dev",
+  "suggest":{
+
+  },
+  "scripts":{
+    "post-install-cmd":[
+
+    ],
+    "post-update-cmd":[
+
+    ],
+    "check":[
+
+    ],
+    "cs-check":[
+
+    ],
+    "link-sensorlogger": [
+      "ln -s vendor/alexstocker/sensorlogger sensorlogger"
+    ],
+    "cleanup":[
+      "rm -fv tmp/logs/*",
+      "rm sensorlogger",
+      "rm .env"
+    ],
+    "add-env-files":[
+      "if [ ! -e \".env\" ]; then cp -v .env.default .env; fi"
+    ],
+    "docker-up":[
+      "@add-env-files",
+      "@link-sensorlogger",
+      "docker-compose up -d --force-recreate --remove-orphans",
+      "docker exec -tu root nextcloud_server bash -c 'apt-get update && apt-get install mc iputils-ping -y'",
+      "docker exec -tu root nextcloud_server bash -c 'chown -Rf www-data:root custom_apps'",
+      "docker exec -tu www-data nextcloud_server bash -c './occ maintenance:install --database mysql --database-name nextcloud --database-host mariadb --database-user nextcloud --database-pass nextcloud --admin-user admin --admin-pass admin'"
+    ],
+    "docker-start":[
+      "docker-compose start"
+    ],
+    "docker-stop":[
+      "docker-compose stop"
+    ],
+    "docker-wipeout":[
+      "@docker-stop",
+      "docker rm nextcloud_server",
+      "docker rm nextcloud-redis",
+      "docker rm nextcloud_mariadb"
+    ]
+  }
+}
