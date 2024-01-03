@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ruleset name="SensorLogger">
+    <description>
+        SensorLogger code sniffer ruleset
+    </description>
+
+    <config name="php_version" value="80000"/>
+
+    <file>sensorlogger/controller</file>
+
+    <exclude-pattern>*/src/Generated/*</exclude-pattern>
+
+    <rule ref="Generic.PHP.ForbiddenFunctions"/>
+    <rule ref="Generic.PHP.NoSilencedErrors"/>
+    <rule ref="Generic.PHP.LowerCaseConstant"/>
+    <rule ref="Generic.PHP.LowerCaseType"/>
+
+    <rule ref="PSR12">
+        <!-- Disabled for now - contradics current standard with too much fallout -->
+        <exclude name="PSR12.Files.FileHeader"/>
+        <exclude name="PSR12.Files.DeclareStatement"/>
+        <exclude name="PSR12.Files.OpenTag"/>
+    </rule>
+
+    <!-- Disabled - these are contradictory to PSR12 (and PSR12 overrules PSR2) -->
+    <rule ref="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace">
+        <severity>0</severity>
+    </rule>
+
+</ruleset>
