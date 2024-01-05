@@ -41,4 +41,4 @@ your@machine:...nextcloud-docker-development$ `sudo rm -Rf data/ html/`
 * Set **CLI Interpreter is required**
 ![PHPStorm CLI Interpreter settings](https://www.html5live.at/wp-content/uploads/2024/01/phpstorm-cli-interpreter-settings.png)
 * Set **Path mapping is required**
-* ![PHPStorm Path mappings](https://www.html5live.at/wp-content/uploads/2024/01/phpstorm-path-mappings.png)
+![PHPStorm Path mappings](https://www.html5live.at/wp-content/uploads/2024/01/phpstorm-path-mappings.png)
