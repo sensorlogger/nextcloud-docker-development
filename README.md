@@ -30,3 +30,15 @@ your@machine:...nextcloud-docker-development$ `composer docker-stop`
 
 #### Start docker containers
 your@machine:...nextcloud-docker-development$ `composer docker-start`
+
+#### Wipe out docker containers
+your@machine:...nextcloud-docker-development$ `composer docker-wipeout`
+
+your@machine:...nextcloud-docker-development$ `sudo rm -Rf data/ html/`
+
+### Developer notes
+* xdebug installed and enabled by default
+* Set **CLI Interpreter is required**
+![PHPStorm CLI Interpreter settings](https://www.html5live.at/wp-content/uploads/2024/01/phpstorm-cli-interpreter-settings.png)
+* Set **Path mapping is required**
+![PHPStorm Path mappings](https://www.html5live.at/wp-content/uploads/2024/01/phpstorm-path-mappings.png)

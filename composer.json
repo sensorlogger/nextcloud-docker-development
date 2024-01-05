@@ -1,7 +1,6 @@
 {
   "name":"sensorlogger/development-env-nc",
   "description":"SensorLogger Development Environment for Nextcloud",
-  "version":"0.0.1",
   "type":"project",
   "license":"GNU GPLv3",
   "repositories":[
@@ -12,16 +11,18 @@
   ],
   "require":{
     "php":">=7.2",
-    "alexstocker/sensorlogger":"dev-0.1-devel"
+    "alexstocker/sensorlogger":"dev-0.1-devel",
+    "ext-json": "*",
+    "ext-curl": "*"
   },
   "require-dev":{
-
+    "squizlabs/php_codesniffer": "^3.0@dev"
   },
   "minimum-stability":"dev",
   "suggest":{
 
   },
-  "scripts":{
+  "scripts": {
     "post-install-cmd":[
 
     ],
@@ -35,7 +36,7 @@
 
     ],
     "link-sensorlogger": [
-      "ln -s vendor/alexstocker/sensorlogger sensorlogger"
+      "if [ ! -e \"sensorlogger\" ]; then ln -s vendor/alexstocker/sensorlogger sensorlogger; fi"
     ],
     "cleanup":[
       "rm -fv tmp/logs/*",
@@ -50,8 +51,10 @@
       "@link-sensorlogger",
       "docker-compose up -d --force-recreate --remove-orphans",
       "docker exec -tu root nextcloud_server bash -c 'apt-get update && apt-get install mc iputils-ping -y'",
-      "docker exec -tu root nextcloud_server bash -c 'chown -Rf www-data:root custom_apps'",
-      "docker exec -tu www-data nextcloud_server bash -c './occ maintenance:install --database mysql --database-name nextcloud --database-host mariadb --database-user nextcloud --database-pass nextcloud --admin-user admin --admin-pass admin'"
+      "docker exec -tu root nextcloud_server bash -c 'chown -Rf www-data:www-data custom_apps'",
+      "docker exec -tu www-data nextcloud_server bash -c './occ maintenance:install --database mysql --database-name nextcloud --database-host mariadb --database-user nextcloud --database-pass nextcloud --admin-user admin --admin-pass admin'",
+      "docker exec -tu www-data nextcloud_server bash -c './occ app:enable sensorlogger'",
+      "@xdebug-install"
     ],
     "docker-start":[
       "docker-compose start"
@@ -64,6 +67,11 @@
       "docker rm nextcloud_server",
       "docker rm nextcloud-redis",
       "docker rm nextcloud_mariadb"
+    ],
+    "xdebug-install": [
+      "docker exec -tu root nextcloud_server bash -c 'pecl install xdebug && docker-php-ext-enable xdebug && echo \"xdebug.start_with_request=trigger\" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && echo \"xdebug.mode=debug\" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && echo \"xdebug.discover_client_host=1\" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini'",
+      "@docker-stop",
+      "@docker-start"
     ]
   }
 }
